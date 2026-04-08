@@ -83,13 +83,13 @@ export function generateLatex(data: ExportData): string {
       
       lines.push('\\textbf{A类不确定度:}');
       lines.push('\\begin{equation}');
-      lines.push(`u_A(${vr.name}) = t_p \\cdot \\frac{S_{${vr.name}}}{\\sqrt{n}} = ${formatNumber(vr.data.tFactor)} \\times \\frac{${formatNumber(vr.stats.sampleStd)}}{\\sqrt{${n}}} = ${formatNumber(vr.stats.uA)}`);
+      lines.push(`u_A(${vr.name}) = t_p \\cdot \\frac{S_{${vr.name}}}{\\sqrt{n}} = ${formatNumber(vr.data.tFactor ?? 0)} \\times \\frac{${formatNumber(vr.stats.sampleStd)}}{\\sqrt{${n}}} = ${formatNumber(vr.stats.uA)}`);
       lines.push('\\end{equation}');
     }
     
     lines.push('\\textbf{B类不确定度:}');
     lines.push('\\begin{equation}');
-    lines.push(`u_B(${vr.name}) = \\frac{\\Delta_{ins}}{k} = \\frac{${formatNumber(vr.data.instrumentError)}}{${formatNumber(vr.data.distributionFactor)}} = ${formatNumber(vr.stats.uB)}`);
+    lines.push(`u_B(${vr.name}) = \\frac{\\Delta_{ins}}{k} = \\frac{${formatNumber(vr.data.instrumentError ?? 0)}}{${formatNumber(vr.data.distributionFactor ?? 1)}} = ${formatNumber(vr.stats.uB)}`);
     lines.push('\\end{equation}');
     
     lines.push('\\textbf{合成不确定度:}');
@@ -131,7 +131,7 @@ export function generateMarkdown(data: ExportData): string {
   lines.push('');
   data.derivatives.forEach(d => {
     lines.push('$$');
-    lines.push(`\\frac{\\partial ${data.resultVariable}}{\\partial ${d.variable}} = ${d.latex}`);
+    lines.push(`\\frac{\\partial ${data.resultVariable}}{\\partial ${d.variable}} = ${d.logDerivativeLatex}`);
     lines.push('$$');
     lines.push('');
   });
@@ -175,14 +175,14 @@ export function generateMarkdown(data: ExportData): string {
       
       lines.push('**A类不确定度:**');
       lines.push('$$');
-      lines.push(`u_A(${vr.name}) = t_p \\cdot \\frac{S_{${vr.name}}}{\\sqrt{n}} = ${formatNumber(vr.data.tFactor)} \\times \\frac{${formatNumber(vr.stats.sampleStd)}}{\\sqrt{${n}}} = ${formatNumber(vr.stats.uA)}`);
+      lines.push(`u_A(${vr.name}) = t_p \\cdot \\frac{S_{${vr.name}}}{\\sqrt{n}} = ${formatNumber(vr.data.tFactor ?? 0)} \\times \\frac{${formatNumber(vr.stats.sampleStd)}}{\\sqrt{${n}}} = ${formatNumber(vr.stats.uA)}`);
       lines.push('$$');
       lines.push('');
     }
     
     lines.push('**B类不确定度:**');
     lines.push('$$');
-    lines.push(`u_B(${vr.name}) = \\frac{\\Delta_{ins}}{k} = \\frac{${formatNumber(vr.data.instrumentError)}}{${formatNumber(vr.data.distributionFactor)}} = ${formatNumber(vr.stats.uB)}`);
+    lines.push(`u_B(${vr.name}) = \\frac{\\Delta_{ins}}{k} = \\frac{${formatNumber(vr.data.instrumentError ?? 0)}}{${formatNumber(vr.data.distributionFactor ?? 1)}} = ${formatNumber(vr.stats.uB)}`);
     lines.push('$$');
     lines.push('');
     
