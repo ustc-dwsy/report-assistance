@@ -112,7 +112,8 @@ export function parseExpression(input: string): ParsedExpression {
  * 将MathNode转换为LaTeX字符串
  */
 export function nodeToLatex(node: MathNode): string {
-  return node.toTex({ parenthesis: 'auto', implicit: 'show' });
+  let tex = node.toTex({ parenthesis: 'auto', implicit: 'show' });
+  return tex.replace(/\\_/g, '_');
 }
 
 /**
