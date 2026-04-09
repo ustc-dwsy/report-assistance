@@ -1,16 +1,18 @@
 ---
+// 组件 Props 定义
 interface Props {
   title: string;
+  description?: string; // 新增可选描述，用于 SEO
 }
 
-const { title } = Astro.props;
+const { title, description = "大学物理实验不确定度计算工具" } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="大学物理实验不确定度计算工具" />
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
@@ -18,10 +20,207 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <slot />
+    <!-- 导航栏（新增） -->
+    <header class="site-header">
+      <div class="header-content">
+        <a href="/" class="logo-link">
+          <span class="logo-text">🧪 物理实验助手</span>
+        </a>
+        <nav class="main-nav" id="mainNav">
+          <a href="/" class:list={[{ active: Astro.url.pathname === '/' }]}>首页</a>
+          <a href="/guide" class:list={[{ active: Astro.url.pathname === '/guide' }]}>使用指南</a>
+          <a href="/main" class:list={[{ active: Astro.url.pathname === '/main' }]}>回到主站</a>
+          <!-- 更多页面可在此扩展 -->
+        </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="切换菜单">☰</button>
+      </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="content-wrapper">
+      <slot />
+    </main>
+
+    <!-- 页脚（新增） -->
+    <footer class="site-footer">
+      <p>© {new Date().getFullYear()} 物理实验不确定度计算器 · Developed by 五水</p>
+    </footer>
+
+    <!-- 移动端菜单切换脚本 -->
+    <script>
+      const toggle = document.getElementById('menuToggle');
+      const nav = document.getElementById('mainNav');
+      toggle?.addEventListener('click', () => {
+        nav?.classList.toggle('open');
+      });
+    </script>
   </body>
 </html>
 
 <style is:global>
+  /* ========== 导入原有全局样式 ========== */
   @import '../styles/global.css';
+
+  /* ========== 新增：导航栏、粒子背景、布局结构样式 ========== */
+  :root {
+    /* 原项目已存在这些变量，此处仅作备用/覆盖 */
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --text-color: #1e293b;
+    --bg-color: #f8fafc;
+    --content-bg: #ffffff;
+    --border-color: #e2e8f0;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* 使导航、内容、页脚位于画布上方 */
+  .site-header,
+  .content-wrapper,
+  .site-footer {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========== 导航栏 ========== */
+  .site-header {
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.4);
+  }
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-link {
+    text-decoration: none;
+  }
+
+  .logo-text {
+    font-weight: 700;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: nowrap;
+  }
+
+  .main-nav {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+
+  .main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .main-nav a:hover {
+    background-color: rgba(79, 70, 229, 0.08);
+    color: var(--primary-color);
+  }
+
+  .main-nav a.active {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+  }
+
+  .menu-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  /* 移动端导航折叠 */
+  @media (max-width: 768px) {
+    .header-content {
+      flex-wrap: wrap;
+    }
+
+    .menu-toggle {
+      display: block;
+    }
+
+    .main-nav {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      padding-top: 0.75rem;
+      gap: 0.25rem;
+    }
+
+    .main-nav.open {
+      display: flex;
+    }
+
+    .main-nav a {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      width: 100%;
+    }
+  }
+
+  /* ========== 内容区域容器 ========== */
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+    min-height: calc(100vh - 180px); /* 留出页脚空间 */
+  }
+
+  /* 原有全局样式中的 main 样式与 content-wrapper 可能有重叠，
+     但为了保持原有计算器卡片样式不受影响，我们仅作包裹层处理。
+     原有 .calculator 等样式在 global.css 中依然生效。 */
+
+  /* ========== 页脚 ========== */
+  .site-footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #64748b;
+    font-size: 0.875rem;
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* 适配原有内容中的 main 元素 */
+  .content-wrapper > :global(main) {
+    background: transparent; /* 原 global.css 中 main 有背景，此处重置 */
+  }
 </style>

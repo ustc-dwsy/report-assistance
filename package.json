@@ -13,6 +13,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^5.0.3",
     "@astrojs/preact": "^5.1.1",
     "astro": "^6.1.4",
     "katex": "^0.16.45",

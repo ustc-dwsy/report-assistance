@@ -1,0 +1,333 @@
+---
+// TODO.astro
+// 开发中提示页面
+const title = "页面开发中";
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚧</text></svg>"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <!-- ✅ 返回按钮 -->
+        <button class="back-btn" onclick="history.back()" title="返回上一页">
+          <!-- <span class="back-arrow">←</span> -->
+          <span class="back-text">返回上一页</span>
+        </button>
+
+        <!-- 动画齿轮图标 -->
+        <div class="icon-wrapper">
+          <div class="gear">⚙️</div>
+        </div>
+
+        <!-- 标题 -->
+        <h1>🚧 界面开发中</h1>
+        <p class="subtitle">我们正在努力构建中，敬请期待！</p>
+
+        <!-- 进度条 -->
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <p class="progress-text">努力开发中...</p>
+
+        <!-- 功能预告卡片 -->
+        <div class="features">
+          <div class="feature-card">
+            <span class="feature-icon">🎨</span>
+            <h3>精美设计</h3>
+            <p>全新的用户界面</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">⚡</span>
+            <h3>极速体验</h3>
+            <p>优化的性能表现</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">🔒</span>
+            <h3>安全可靠</h3>
+            <p>数据安全保障</p>
+          </div>
+        </div>
+
+        <!-- 底部信息 -->
+        <footer>
+          <p>如有疑问，请联系：<a href="mailto:wsw123@mail.ustc.edu.cn">wsw123@mail.ustc.edu.cn</a></p>
+          <p>© {new Date().getFullYear()} 物理实验不确定度计算器 · Developed by 五水</p>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  /* ===== 全局重置 ===== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  /* ===== 主容器 ===== */
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .container {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    position: relative;
+    animation: fadeInUp 1s ease-out;
+  }
+
+  /* ===== ✅ 返回按钮 ===== */
+  .back-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .back-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    transform: translateX(-4px);
+    box-shadow: 0 4px 20px rgba(79, 172, 254, 0.25);
+  }
+
+  .back-btn:active {
+    transform: translateX(-2px) scale(0.97);
+  }
+
+  .back-arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .back-btn:hover .back-arrow {
+    transform: translateX(-3px);
+  }
+
+  /* ===== 齿轮动画 ===== */
+  .icon-wrapper {
+    margin-bottom: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .gear {
+    font-size: 4rem;
+    display: inline-block;
+    animation: spin 4s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ===== 标题 ===== */
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+    background: linear-gradient(90deg, #f093fb, #f5576c, #4facfe, #00f2fe);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ===== 进度条 ===== */
+  .progress-bar {
+    width: 100%;
+    max-width: 400px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    margin: 0 auto 0.8rem;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 30%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    animation: loading 2s ease-in-out infinite;
+  }
+
+  @keyframes loading {
+    0% { width: 10%; opacity: 0.6; }
+    50% { width: 70%; opacity: 1; }
+    100% { width: 10%; opacity: 0.6; }
+  }
+
+  .progress-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 3rem;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ===== 功能卡片 ===== */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .feature-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    color: #ffffff;
+  }
+
+  .feature-card p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* ===== 底部 ===== */
+  footer {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  footer p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.5rem;
+  }
+
+  footer a {
+    color: #4facfe;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  footer a:hover {
+    color: #00f2fe;
+    text-decoration: underline;
+  }
+
+  .copyright {
+    font-size: 0.75rem !important;
+    color: rgba(255, 255, 255, 0.25) !important;
+  }
+
+  /* ===== 入场动画 ===== */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+    }
+
+    .features {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .feature-card {
+      padding: 1.5rem 1rem;
+    }
+
+    /* ✅ 移动端按钮居中 */
+    .back-btn {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .icon-wrapper {
+      margin-top: 1rem;
+    }
+  }
+</style>
