@@ -29,6 +29,14 @@ const { title, description = "大学物理实验不确定度计算工具" } = As
         <nav class="main-nav" id="mainNav">
           <a href="/" class:list={[{ active: Astro.url.pathname === '/' }]}>首页</a>
           <a href="/guide" class:list={[{ active: Astro.url.pathname === '/guide' }]}>使用指南</a>
+          <a 
+            href="https://ustc-pt.wsw.wiki/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class:list={[{ active: Astro.url.pathname === '/main' }]}
+          >
+            USTC 属性测试
+          </a>
           <a href="/main" class:list={[{ active: Astro.url.pathname === '/main' }]}>回到主站</a>
           <!-- 更多页面可在此扩展 -->
         </nav>
